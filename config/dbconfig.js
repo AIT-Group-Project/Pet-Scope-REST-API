@@ -5,11 +5,11 @@ const config = {
     port: parseInt(process.env.DB_PORT),
     database: process.env.DB_NAME,
     authentication: {
-        type: 'default'
+        type: 'default',
     },
     options: {
-        encrypt: true
-    }
-}
+        encrypt: true,
+    },
+};
 
 module.exports = config;
