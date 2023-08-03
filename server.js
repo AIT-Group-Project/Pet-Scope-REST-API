@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use('/', require('./routes/root'));
 app.use('/auth', require('./routes/auth'));
 
-// All undefined endpoints return a 404 html page
+// All undefined endpoints return a 404 status and html page
 app.all('*', (req, res) => {
     res.status(404);
     if (req.accepts('html')) {
