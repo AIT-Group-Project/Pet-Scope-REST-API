@@ -27,7 +27,7 @@ based on https://github.com/gitdagray/mongo_async_crud
 # API Endpoints
 
 |Address|Request-Type|Body-Data|JWT-Auth-Required|
-|-------|------------|---------|-----------------|
+|-------|:----------:|---------|:---------------:|
 |http://localhost:3500/auth|POST|email - password|No|
 |http://localhost:3500/register|POST|email - password - firstName - LastName|No|
 |http://localhost:3500/|-|-|
