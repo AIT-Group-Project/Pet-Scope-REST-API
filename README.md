@@ -12,8 +12,8 @@ based on https://github.com/gitdagray/mongo_async_crud
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs)
 
 # Setup Steps
-1) Download & Install Node.js [https://nodejs.org/en](https://nodejs.org/en)
-2) Clone [https://github.com/AIT-Group-Project/Refactored_Rest_API.git](https://github.com/AIT-Group-Project/Refactored_Rest_API.git)
+1) Download & Install Node.js - [https://nodejs.org/en](https://nodejs.org/en)
+2) Clone Repo - [https://github.com/AIT-Group-Project/Refactored_Rest_API.git](https://github.com/AIT-Group-Project/Refactored_Rest_API.git)
 3) Open the terminal in project directory
 4) Run `npm i` to install all the required dependencies
 5) Choses from Available Scripts
@@ -26,10 +26,10 @@ based on https://github.com/gitdagray/mongo_async_crud
 
 # API Endpoints
 
-|Address|Request-Type|Body|
-|-------|------------|----|
-|http://localhost:3500/auth|POST|{'email':'LOGIN_ATEMPT_EMAIL','password':'LOGIN_ATEMPT_PASSWORD'}
-|http://localhost:3500/|-|-|
+|Address|Request-Type|Body-Data|JWT-Auth-Required|
+|-------|------------|---------|-----------------|
+|http://localhost:3500/auth|POST|email - password|No|
+|http://localhost:3500/register|POST|email - password - firstName - LastName|No|
 |http://localhost:3500/|-|-|
 |http://localhost:3500/|-|-|
 
