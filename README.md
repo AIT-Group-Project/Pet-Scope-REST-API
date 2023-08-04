@@ -11,7 +11,7 @@ based on https://github.com/gitdagray/mongo_async_crud
 - [mssql](https://www.npmjs.com/package/mssql)
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs)
 
-# Setup
+# Setup Steps
 1) Download & Install Node.js [https://nodejs.org/en](https://nodejs.org/en)
 2) Clone [https://github.com/AIT-Group-Project/Refactored_Rest_API.git](https://github.com/AIT-Group-Project/Refactored_Rest_API.git)
 3) Open the terminal in project directory
