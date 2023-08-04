@@ -6,6 +6,7 @@ const path = require('path');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const cookieParser = require('cookie-parser');
+const verifyJWT = require('./middleware/verifyJWT');
 const PORT = process.env.PORT || 3500;
 
 // Express Application Setup
@@ -17,7 +18,10 @@ app.use(cookieParser());
 
 // API ENDPOINTS
 app.use('/', require('./routes/root'));
+app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'));
+
+app.use(verifyJWT); // verification middleware - endpoints listed below will use this and require a user to be authenticated before being able to access these endpoints
 
 // All undefined endpoints return a 404 status and html page
 app.all('*', (req, res) => {
