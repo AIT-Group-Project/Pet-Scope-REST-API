@@ -10,6 +10,7 @@ based on https://github.com/gitdagray/mongo_async_crud
 - [cookie-parser](https://www.npmjs.com/package/cookie-parser)
 - [mssql](https://www.npmjs.com/package/mssql)
 - [bcryptjs](https://www.npmjs.com/package/bcryptjs)
+- [eslint](https://www.npmjs.com/package/eslint)
 
 # Setup Steps
 1) Download & Install Node.js - [https://nodejs.org/en](https://nodejs.org/en)
