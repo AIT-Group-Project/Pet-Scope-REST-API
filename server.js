@@ -22,9 +22,9 @@ app.use('/register', require('./routes/register'));
 app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 
-app.use(verifyJWT); // verification middleware - endpoints listed below will use this and require a user to be authenticated before being able to access these endpoints
+app.use(verifyJWT); // verification middleware - endpoints listed below will use this and require an accessToken in request as a Bearer Token
 
-// All undefined endpoints return a 404 status and html page
+// All undefined endpoints return a 404 status and html/json/text response
 app.all('*', (req, res) => {
     res.status(404);
     if (req.accepts('html')) {
