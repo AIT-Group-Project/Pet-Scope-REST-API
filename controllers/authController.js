@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const sql = require('mssql');
@@ -10,9 +11,8 @@ const handleLogin = async (req, res) => {
 
     const pool = await sql.connect(config);
     const checkForUser = await pool.request()
-        // eslint-disable-next-line new-cap
         .input('sql_email', sql.NVarChar(255), email)
-        .query('SELECT u.user_id, a.password_hash FROM vetdata.users u INNER JOIN vetdata.dim_authentication a ON u.user_id = a.user_id AND u.email = @sql_email');
+        .query('SELECT u.user_id, u.email, a.password_hash FROM vetdata.users u INNER JOIN vetdata.dim_authentication a ON u.user_id = a.user_id AND u.email = @sql_email');
 
     if (checkForUser.recordset[0] == undefined) return res.status(400).json({'message': `No User Exists with this email: ${email}`});
 
@@ -34,7 +34,12 @@ const handleLogin = async (req, res) => {
             process.env.REFRESH_TOKEN_SECRET,
             {expiresIn: '1d'},
         );
-        // implement storing tokens in database
+        // storing tokens in database
+        await pool.request()
+            .input('sql_uid', sql.Int, checkForUser.recordset[0].user_id)
+            .input('sql_refreshToken', sql.NVarChar(255), refreshToken)
+            .query('UPDATE vetdata.dim_authentication SET refreshToken = @sql_refreshToken WHERE user_id = @sql_uid;');
+
         res.cookie('jwt', refreshToken, {httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000});
         res.json({accessToken});
     } else {
