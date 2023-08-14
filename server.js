@@ -27,12 +27,9 @@ app.use('/playdate', require('./routes/api/playdate'));
 
 app.use(verifyJWT); // verification middleware - endpoints listed below will use this and require an accessToken in request as a Bearer Token
 
-<<<<<<< Updated upstream
 
-=======
 // add protected api routes here
 // ...
->>>>>>> Stashed changes
 
 // All undefined endpoints return a 404 status and html/json/text response
 app.all('*', (req, res) => {
