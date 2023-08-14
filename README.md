@@ -33,6 +33,6 @@ based on https://github.com/gitdagray/mongo_async_crud
 |http://localhost:3500/auth|POST|email - password|No|
 |http://localhost:3500/register|POST|email - password - firstName - LastName|No|
 |http://localhost:3500/refresh|GET|cookie.jwt (refreshToken)|No|
-|http://localhost:3500/|-|-|
+|http://localhost:3500/logout|GET|cookie.jwt (refreshToken)|No|
 
 
