@@ -3,7 +3,7 @@ const sql = require('mssql');
 const config = require('../config/dbconfig');
 
 const handlePlayDate = async (req, res) => {
-    const {sender_user_id, receiver_user_id, play_date, play_time} = req.body;
+    const {sender_user_id, receiver_user_id, play_date, play_time} = req.body; // update to remove snake_case from const names request json will need to match
     if (!sender_user_id || !receiver_user_id || !play_date || !play_time) return res.status(400).json({'message': 'Invalid playdate request'});
 
     const pool = await sql.connect(config);
