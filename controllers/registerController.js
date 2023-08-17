@@ -7,6 +7,8 @@ const handleNewUser = async (req, res) => {
     const {email, password, firstName, lastName} = req.body;
     if (!email || !password || !firstName || !lastName) return res.status(400).json({'message': 'Invalid Request.'});
 
+    // console.log(req.body);
+
     // check for duplicate usernames in the db
     const pool = await sql.connect(config);
     const checkForDuplicate = await pool.request()
@@ -17,8 +19,8 @@ const handleNewUser = async (req, res) => {
 
     try {
         // encrypt the password
-        const salt = await bcrypt.genSaltSync(10);
-        const hashedPassword = await bcrypt.hashSync(password, salt);
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         const maxUserId = await pool.request()
             .query('SELECT max(user_id) AS maxUID FROM vetdata.users');
@@ -37,7 +39,7 @@ const handleNewUser = async (req, res) => {
             .input('sql_UID', sql.Int, newUID)
             .input('sql_password_hash', sql.NVarChar(255), hashedPassword)
             .input('sql_password_salt', sql.NVarChar(255), salt)
-            .query('INSERT INTO vetdata.dim_authentication VALUES (@sql_UID,@sql_password_hash,@sql_password_salt)');
+            .query('INSERT INTO vetdata.dim_authentication VALUES (@sql_UID,@sql_password_hash,@sql_password_salt,NULL)');
 
         // const result = {
         //     'email': email,

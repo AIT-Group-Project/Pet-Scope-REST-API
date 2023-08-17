@@ -18,16 +18,21 @@ const handleLogin = async (req, res) => {
     // checks if the returned query is defined (undefined query result = no record in the database matching req: email)
     if (checkForUser.recordset[0] == undefined) return res.status(400).json({'message': `No User Exists with this email: ${email}`});
 
+    // declare const for sql result values
+    const resultPasswordHash = checkForUser.recordset[0].password_hash;
+    const resultEmail = checkForUser.recordset[0].email;
+    const resultUserId = checkForUser.recordset[0].user_id;
+
     // comparing req: password to database: password_hash returning true/false
-    const isMatch = await bcrypt.compare(password, checkForUser.recordset[0].password_hash);
+    const isMatch = await bcrypt.compare(password, resultPasswordHash);
 
     if (isMatch) {
         // create jwt accessToken, refreshToken using database: user_id, email
         const accessToken = jwt.sign(
             {
                 'UserInfo': {
-                    'user_id': checkForUser.recordset[0].user_id,
-                    'email': checkForUser.recordset[0].email,
+                    'user_id': resultUserId,
+                    'email': resultEmail,
                 },
             },
             process.env.ACCESS_TOKEN_SECRET,
@@ -47,7 +52,7 @@ const handleLogin = async (req, res) => {
 
         // send accessToken, refreshToken in res
         res.cookie('jwt', refreshToken, {httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000});
-        res.json({accessToken});
+        res.json({accessToken, resultUserId, resultEmail});
     } else {
         res.sendStatus(401);
     }
