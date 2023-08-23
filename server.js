@@ -23,10 +23,9 @@ app.use('/auth', require('./routes/auth'));
 app.use('/refresh', require('./routes/refresh'));
 app.use('/logout', require('./routes/logout'));
 
-// services page
-app.use('/playdate', require('./routes/api/playdate'));
-
 app.use(verifyJWT); // verification middleware - endpoints listed below will use this and require an accessToken in request as a Bearer Token
+app.use('/playdate', require('./routes/api/playdate'));
+app.use('/users', require('./routes/api/users'));
 
 
 // add protected api routes here
