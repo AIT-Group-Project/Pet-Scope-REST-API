@@ -9,14 +9,19 @@ const handleLogout = async (req, res) => {
     if (!cookies?.jwt) return res.sendStatus(204);
     const refreshToken = cookies.jwt;
 
-    // remove refreshToken from database & cookie
-    const pool = await sql.connect(config);
-    await pool.request()
-        .input('sql_refreshToken', sql.NVarChar(255), refreshToken)
-        .query('UPDATE vetdata.dim_authentication SET refreshToken = NULL WHERE refreshToken = @sql_refreshToken');
+    try {
+        // remove refreshToken from database & cookie
+        const pool = await sql.connect(config);
+        await pool.request()
+            .input('sql_refreshToken', sql.NVarChar(255), refreshToken)
+            .query('UPDATE vetdata.dim_authentication SET refreshToken = NULL WHERE refreshToken = @sql_refreshToken');
 
-    res.clearCookie('jwt', {httpOnly: true, sameSite: 'None', secure: true});
-    res.sendStatus(204);
+        res.clearCookie('jwt', {httpOnly: true, sameSite: 'None', secure: true});
+        res.sendStatus(204);
+    } catch (err) {
+        res.status(500).json({'message': err.message});
+    };
+
 };
 
 module.exports = {handleLogout};
