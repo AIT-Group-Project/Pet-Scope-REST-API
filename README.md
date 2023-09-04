@@ -1,5 +1,5 @@
 # Refactored_Rest_API
-### Application Author: `Christopher Osborn`
+### Application Author: `Christopher Osborn` `Cameron Swiggs`
 based on https://github.com/gitdagray/mongo_async_crud
 
 # NPM Package's
@@ -34,6 +34,7 @@ based on https://github.com/gitdagray/mongo_async_crud
 |http://localhost:3500/register|POST|email - password - firstName - LastName|No|
 |http://localhost:3500/refresh|GET|cookie.jwt (refreshToken)|No|
 |http://localhost:3500/logout|GET|cookie.jwt (refreshToken)|No|
-|http://localhost:3500/playdate|POST|senderUID - reviverUID - date - time|Yes - No while testing|
+|http://localhost:3500/playdate|POST|senderUID - reviverUID - date - time|Yes|
+|http://localhost:3500/users|GET| - |Yes|
 
 
