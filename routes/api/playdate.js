@@ -3,6 +3,11 @@ const express = require('express');
 const router = express.Router();
 const playdateController = require('../../controllers/playdateController');
 
-router.post('/', playdateController.handlePlayDate);
+router.route('/')
+    .post(playdateController.handlePlayDate);
+
+
+router.route('/:userId')
+    .get(playdateController.handlePlayDateInvite);
 
 module.exports = router;

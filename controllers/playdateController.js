@@ -3,6 +3,10 @@ const sql = require('mssql');
 const config = require('../config/dbconfig');
 
 const handlePlayDate = async (req, res) => {
+    if (!req?.body) {
+        return res.status(400).json({'message': 'Invalid playdate request'});
+    };
+
     const {sender, receiver, date, time} = req.body; // update to remove snake_case from const names request json will need to match
     if (!sender || !receiver || !date || !time) return res.status(400).json({'message': 'Invalid playdate request'});
     try {
@@ -20,4 +24,25 @@ const handlePlayDate = async (req, res) => {
     }
 };
 
-module.exports = {handlePlayDate};
+const handlePlayDateInvite = async (req, res) =>{
+    if (!req?.params?.userId) return res.status(400).json({ 'message': 'Employee User ID required.' });
+    
+    const CurrentUserId = req?.params?.userId;
+
+    try {
+        const pool = await sql.connect(config);
+        const response = await pool.request()
+            .input('sql_current_logged_in_user_id', sql.Int, CurrentUserId)
+            .query("SELECT pd.play_date_id, CONCAT(u.first_name, ' ', u.last_name) AS sender_name, CONCAT(receiver.first_name, ' ', receiver.last_name) AS receiver_name, pd.play_date, pd.play_time, pd.confirmed FROM vetdata.dim_playdates pd LEFT JOIN vetdata.users u ON pd.sender_user_id = u.user_id LEFT JOIN vetdata.users receiver ON pd.reciver_user_id = receiver.user_id WHERE pd.reciver_user_id = @sql_current_logged_in_user_id");
+
+        return res.status(200).json(...response.recordsets);
+    } catch (err) {
+        res.status(500).json({'message': err.message});
+    }
+};
+
+module.exports = {
+    handlePlayDate,
+    handlePlayDateInvite};
+
+
