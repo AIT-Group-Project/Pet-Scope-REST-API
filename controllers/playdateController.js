@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+const { response } = require('express');
 const sql = require('mssql');
 const config = require('../config/dbconfig');
 
@@ -41,8 +42,32 @@ const handlePlayDateInvite = async (req, res) =>{
     }
 };
 
+const confirmPlayDateInvite = async (req, res) =>{
+    if (!req?.body) {
+        return res.status(400).json({'message': 'Invalid playdate confirm'});
+    };
+
+    const {PlayDate_ID, Confirmed} = req.body
+
+    try {
+        const pool = await sql.connect(config);
+        await pool.request()
+            .input('sql_PlayDate_ID', sql.Int, PlayDate_ID)
+            .input('sql_confirmed', sql.NVarChar(1), Confirmed)
+            .query('UPDATE vetdata.dim_playdates SET confirmed = @sql_confirmed WHERE play_date_id = @sql_PlayDate_ID')
+
+
+        return res.status(200).json(response);
+    } catch (err) {
+        res.status(500).json({'message': err.message});
+    }
+};
+
+
 module.exports = {
     handlePlayDate,
-    handlePlayDateInvite};
+    handlePlayDateInvite,
+    confirmPlayDateInvite
+};
 
 
