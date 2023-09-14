@@ -9,6 +9,7 @@ router.route('/')
 router.route('/:userId')
     .get(playdateController.handlePlayDateInvite);
 
+//Had to do it this way or it just kept reading the handlePlayDateInvite instead
 router.route('/:userId/:userId')
     .get(playdateController.handlePlayDateInviteUsersDates);
 
