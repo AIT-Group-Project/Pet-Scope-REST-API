@@ -9,7 +9,12 @@ router.route('/')
 router.route('/:userId')
     .get(playdateController.handlePlayDateInvite);
 
+router.route('/:userId/:userId')
+    .get(playdateController.handlePlayDateInviteUsersDates);
+
 router.route('/:play_date_id')
     .post(playdateController.confirmPlayDateInvite);
+
+
 
 module.exports = router;
