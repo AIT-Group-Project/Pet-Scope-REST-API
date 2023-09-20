@@ -27,6 +27,7 @@ app.use(verifyJWT); // verification middleware - endpoints listed below will use
 app.use('/playdate', require('./routes/api/playdate'));
 app.use('/users', require('./routes/api/users'));
 app.use('/profile', require('./routes/api/profile'));
+// app.use('/invite', require('./routes/api/invite'));
 
 
 // add protected api routes here
