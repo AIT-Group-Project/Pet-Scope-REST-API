@@ -34,7 +34,7 @@ const handlePlayDateInvite = async (req, res) =>{
         const pool = await sql.connect(config);
         const response = await pool.request()
             .input('sql_current_logged_in_user_id', sql.Int, CurrentUserId)
-            .query("SELECT pd.play_date_id, CONCAT(u.first_name, ' ', u.last_name) AS sender_name, CONCAT(receiver.first_name, ' ', receiver.last_name) AS receiver_name, pd.play_date, pd.play_time, pd.confirmed FROM vetdata.dim_playdates pd LEFT JOIN vetdata.users u ON pd.sender_user_id = u.user_id LEFT JOIN vetdata.users receiver ON pd.reciver_user_id = receiver.user_id WHERE pd.reciver_user_id = @sql_current_logged_in_user_id");
+            .query("SELECT u.pet_breed AS sender_pet_breed, receiver.pet_breed AS receiver_pet_breed, pd.play_date_id, CONCAT(u.first_name, ' ', u.last_name) AS sender_name, CONCAT(receiver.first_name, ' ', receiver.last_name) AS receiver_name, pd.play_date, pd.play_time, pd.confirmed FROM vetdata.dim_playdates pd LEFT JOIN vetdata.users u ON pd.sender_user_id = u.user_id LEFT JOIN vetdata.users receiver ON pd.reciver_user_id = receiver.user_id WHERE pd.reciver_user_id = @sql_current_logged_in_user_id");
 
         return res.status(200).json(...response.recordsets);
     } catch (err) {
@@ -51,7 +51,7 @@ const handlePlayDateInviteUsersDates = async (req, res) =>{
         const pool = await sql.connect(config);
         const response = await pool.request()
             .input('sql_current_logged_in_user_id', sql.Int, CurrentUserIdd)
-            .query("SELECT pd.play_date_id, CONCAT(u.first_name, ' ', u.last_name) AS sender_name, CONCAT(receiver.first_name, ' ', receiver.last_name) AS receiver_name, pd.play_date, pd.play_time, pd.confirmed FROM vetdata.dim_playdates pd LEFT JOIN vetdata.users u ON pd.sender_user_id = u.user_id LEFT JOIN vetdata.users receiver ON pd.reciver_user_id = receiver.user_id WHERE pd.sender_user_id = @sql_current_logged_in_user_id");
+            .query("SELECT u.pet_breed AS sender_pet_breed, receiver.pet_breed AS receiver_pet_breed, pd.play_date_id, CONCAT(u.first_name, ' ', u.last_name) AS sender_name, CONCAT(receiver.first_name, ' ', receiver.last_name) AS receiver_name, pd.play_date, pd.play_time, pd.confirmed FROM vetdata.dim_playdates pd LEFT JOIN vetdata.users u ON pd.sender_user_id = u.user_id LEFT JOIN vetdata.users receiver ON pd.reciver_user_id = receiver.user_id WHERE pd.sender_user_id = @sql_current_logged_in_user_id");
 
         return res.status(200).json(...response.recordsets);
     } catch (err) {
