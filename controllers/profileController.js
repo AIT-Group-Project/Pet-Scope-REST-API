@@ -7,9 +7,9 @@ const assetsFolder = path.join(__dirname, 'assets');
 
 const handleProfile = async (req, res) => {
     console.log('req.files', req.files);
-    const { petname, dogorcat, gender, breed, age, address, phoneNo, postcode, UID } = req.body;
+    const { petname, dogorcat, gender, breed, age, suburb, phoneNo, postcode, UID } = req.body;
     console.log('req.body', req.body)
-    // if ( !petname || !dogorcat || !postcode || !address || !age || !gender || !phoneNo || !breed || !UID) return res.status(400).json({'message': 'Invalid Request.'});
+     //if ( !petname || !dogorcat || !postcode || !suburb || !age || !gender || !phoneNo || !breed || !UID) return res.status(400).json({'message': 'Invalid Request.'});
     
     try {
         const pool = await sql.connect(config);   
@@ -17,7 +17,7 @@ const handleProfile = async (req, res) => {
             .input('sql_pet_name', sql.NVarChar(255), petname)
             .input('sql_dog_cat', sql.NVarChar(255), dogorcat)
             .input('sql_postcode', sql.NVarChar(255), postcode)
-            .input('sql_suburb', sql.NVarChar(255), address)
+            .input('sql_suburb', sql.NVarChar(255), suburb)
             .input('sql_pet_age', sql.NVarChar(255), age)
             .input('sql_pet_breed', sql.NVarChar(255), breed)
             .input('sql_pet_gender', sql.NVarChar(255), gender)
@@ -34,7 +34,7 @@ const handleProfile = async (req, res) => {
         } catch (err) {
            return res.status(500).json({'message': err.message});    
     } 
-    };
+};
 
 
 
