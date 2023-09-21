@@ -26,6 +26,7 @@ app.use('/logout', require('./routes/logout'));
 app.use(verifyJWT); // verification middleware - endpoints listed below will use this and require an accessToken in request as a Bearer Token
 app.use('/playdate', require('./routes/api/playdate'));
 app.use('/users', require('./routes/api/users'));
+app.use('/profile', require('./routes/api/profile'));
 // app.use('/invite', require('./routes/api/invite'));
 
 
